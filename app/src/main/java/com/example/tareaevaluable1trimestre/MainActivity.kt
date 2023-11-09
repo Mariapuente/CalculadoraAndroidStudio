@@ -82,29 +82,49 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
         when (v?.id) {
-            binding.ac.id -> {
-                texto = ""
-                reg = ""
 
+
+
+            binding.suma.id -> {
+                texto += ("+").toString()
             }
-
-            binding.negativoPositivo.id -> {
-                texto = (texto.toInt() * -1).toString()
+            binding.resta.id -> {
+                texto += ("-").toString()
             }
-
-            binding.porcentaje.id -> {
-                val op = texto.toInt()
-                val result = formatoResultado(op * 0.01)
-                texto = result.toString()
-
+            binding.multiplicacion.id -> {
+                texto += ("x").toString()
             }
-
             binding.division.id -> {
                 texto += ("/").toString()
-
-
             }
 
+
+
+            binding.cero.id -> {
+                texto += "0"
+            }
+            binding.uno.id -> {
+                texto += "1"
+            }
+
+            binding.dos.id -> {
+                texto += "2"
+            }
+
+            binding.tres.id -> {
+                texto += "3"
+            }
+            binding.cuatro.id -> {
+                texto += "4"
+            }
+
+            binding.cinco.id -> {
+                texto += "5"
+            }
+
+            binding.seis.id -> {
+                texto += "6"
+            }
             binding.siete.id -> {
                 texto += "7"
             }
@@ -119,47 +139,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             }
 
-            binding.multiplicacion.id -> {
-                texto += ("x").toString()
 
+
+            binding.ac.id -> {
+                texto = ""
+                reg = ""
             }
-
-            binding.cuatro.id -> {
-                texto += "4"
+            binding.negativoPositivo.id -> {
+                texto = (texto.toDouble() * -1).toString()
             }
-
-            binding.cinco.id -> {
-                texto += "5"
+            binding.porcentaje.id -> {
+                val op = texto.toDouble()
+                val result = formatoResultado(op * 0.01)
+                texto = result.toString()
             }
-
-            binding.seis.id -> {
-                texto += "6"
-            }
-
-            binding.resta.id -> {
-                texto += ("-").toString()
-            }
-
-            binding.uno.id -> {
-                texto += "1"
-            }
-
-            binding.dos.id -> {
-                texto += "2"
-            }
-
-            binding.tres.id -> {
-                texto += "3"
-            }
-
-            binding.suma.id -> {
-                texto += ("+").toString()
-            }
-
-            binding.cero.id -> {
-                texto += "0"
-            }
-
             binding.coma.id -> {
                 texto += (".").toString()
             }
@@ -171,72 +164,56 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             binding.raizCubica?.id -> {
 
                 texto = limitarDecimales(formatoResultado(Math.cbrt(texto.toDouble())).toDouble(), 2)
-
             }
-
             binding.raizCuadrada?.id -> {
                 texto = limitarDecimales(formatoResultado(Math.sqrt(texto.toDouble())).toDouble(),2)
-
             }
-
             binding.exponente?.id -> {
                 texto += ("^").toString()
             }
-
             binding.elevadoCubo?.id -> {
                 texto = Math.pow(texto.toDouble(), 3.0).toString()
                 texto = formatoResultado(texto.toDouble()).toString()
             }
-
             binding.elevadoCuadrado?.id -> {
                 texto = Math.pow(texto.toDouble(), 2.0).toString()
                 texto = formatoResultado(texto.toDouble()).toString()
             }
-
             binding.seno?.id -> {
                 texto = Math.sin(texto.toDouble()).toString()
                 texto = formatoResultado(texto.toDouble()).toString()
             }
-
             binding.coseno?.id -> {
                 texto = Math.cos(texto.toDouble()).toString()
                 texto = formatoResultado(texto.toDouble()).toString()
             }
-
             binding.tangente?.id -> {
                 texto = Math.tan(texto.toDouble()).toString()
                 texto = formatoResultado(texto.toDouble()).toString()
             }
-
             binding.senoHiperbolico?.id -> {
                 texto = Math.sinh(texto.toDouble()).toString()
                 texto = formatoResultado(texto.toDouble()).toString()
             }
-
             binding.cosenoHiperbolico?.id -> {
                 texto = Math.cosh(texto.toDouble()).toString()
                 texto = formatoResultado(texto.toDouble()).toString()
             }
-
             binding.tangHiperbolica?.id -> {
                 texto = Math.tanh(texto.toDouble()).toString()
                 texto = formatoResultado(texto.toDouble()).toString()
             }
-
             binding.pi?.id -> {
                 texto += Math.PI.toString()
             }
-
             binding.logaritmoBase10?.id -> {
                 texto = Math.log10(texto.toDouble()).toString()
                 texto = formatoResultado(texto.toDouble()).toString()
             }
-
             binding.logaritmoNatural?.id -> {
                 texto = Math.log(texto.toDouble()).toString()
                 texto = formatoResultado(texto.toDouble()).toString()
             }
-
             binding.igual.id -> {
 
 
@@ -317,7 +294,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
         return result
     }
-
     fun formatoResultado(valor: Double): String {
         if (valor % 1 == 0.0) {
             return valor.toInt().toString()
@@ -325,7 +301,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             return valor.toString()
         }
     }
-
     fun limitarDecimales(numero: Double, numeroDecimales: Int = 2): String {
         val formato = DecimalFormat(
             "#." + "#".repeat(numeroDecimales)
