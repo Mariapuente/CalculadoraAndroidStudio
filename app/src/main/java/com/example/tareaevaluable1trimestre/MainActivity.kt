@@ -153,7 +153,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             binding.porcentaje.id -> {
                 val op = texto.toDouble()
                 val result = formatoResultado(op * 0.01)
-                texto = result.toString()
+                texto =
+                    limitarDecimales(formatoResultado(result.toDouble()).toDouble(), 2).toString()
             }
 
             binding.coma.id -> {
@@ -181,42 +182,50 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             binding.elevadoCubo?.id -> {
                 texto = Math.pow(texto.toDouble(), 3.0).toString()
-                texto = formatoResultado(texto.toDouble()).toString()
+                texto =
+                    limitarDecimales(formatoResultado(texto.toDouble()).toDouble(), 2).toString()
             }
 
             binding.elevadoCuadrado?.id -> {
                 texto = Math.pow(texto.toDouble(), 2.0).toString()
-                texto = formatoResultado(texto.toDouble()).toString()
+                texto =
+                    limitarDecimales(formatoResultado(texto.toDouble()).toDouble(), 2).toString()
             }
 
             binding.seno?.id -> {
                 texto = Math.sin(texto.toDouble()).toString()
-                texto = formatoResultado(texto.toDouble()).toString()
+                texto =
+                    limitarDecimales(formatoResultado(texto.toDouble()).toDouble(), 2).toString()
             }
 
             binding.coseno?.id -> {
                 texto = Math.cos(texto.toDouble()).toString()
-                texto = formatoResultado(texto.toDouble()).toString()
+                texto =
+                    limitarDecimales(formatoResultado(texto.toDouble()).toDouble(), 2).toString()
             }
 
             binding.tangente?.id -> {
                 texto = Math.tan(texto.toDouble()).toString()
-                texto = formatoResultado(texto.toDouble()).toString()
+                texto =
+                    limitarDecimales(formatoResultado(texto.toDouble()).toDouble(), 2).toString()
             }
 
             binding.senoHiperbolico?.id -> {
                 texto = Math.sinh(texto.toDouble()).toString()
-                texto = formatoResultado(texto.toDouble()).toString()
+                texto =
+                    limitarDecimales(formatoResultado(texto.toDouble()).toDouble(), 2).toString()
             }
 
             binding.cosenoHiperbolico?.id -> {
                 texto = Math.cosh(texto.toDouble()).toString()
-                texto = formatoResultado(texto.toDouble()).toString()
+                texto =
+                    limitarDecimales(formatoResultado(texto.toDouble()).toDouble(), 2).toString()
             }
 
             binding.tangHiperbolica?.id -> {
                 texto = Math.tanh(texto.toDouble()).toString()
-                texto = formatoResultado(texto.toDouble()).toString()
+                texto =
+                    limitarDecimales(formatoResultado(texto.toDouble()).toDouble(), 2).toString()
             }
 
             binding.pi?.id -> {
@@ -225,12 +234,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             binding.logaritmoBase10?.id -> {
                 texto = Math.log10(texto.toDouble()).toString()
-                texto = formatoResultado(texto.toDouble()).toString()
+                texto =
+                    limitarDecimales(formatoResultado(texto.toDouble()).toDouble(), 2).toString()
             }
 
             binding.logaritmoNatural?.id -> {
                 texto = Math.log(texto.toDouble()).toString()
-                texto = formatoResultado(texto.toDouble()).toString()
+                texto =
+                    limitarDecimales(formatoResultado(texto.toDouble()).toDouble(), 2).toString()
             }
 
             binding.igual.id -> {
@@ -250,30 +261,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             reg = texto
                             texto =
                                 limitarDecimales(formatoResultado(result).toDouble(), 2).toString()
-
-                        }
-
-
-                    } else if (input.contains("-")) {
-                        val parts = input.split("-")
-                        if (parts.size == 2) {
-                            val operand1 = parts[0].toDouble()
-                            val operand2 = parts[1].toDouble()
-                            val result = operand1 - operand2
-                            reg = texto
-                            texto =
-                                limitarDecimales(formatoResultado(result).toDouble(), 2).toString()
-                        } else if (parts.size == 3) {
-                            if (parts[0].toString().contains("-")) {
-                                val operand2 = parts[1].toDouble()
-                                val operand3 = parts[2].toDouble()
-                                val result = -(operand2 - operand3)
-                                reg = texto
-                                texto = limitarDecimales(
-                                    formatoResultado(result).toDouble(),
-                                    2
-                                ).toString()
-                            }
 
                         }
                     } else if (input.contains("x")) {
@@ -302,19 +289,48 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             val operand1 = parts[0].toDouble()
                             val operand2 = parts[1].toDouble()
                             val result = Math.pow(operand1, operand2)
-                            reg = texto + ("=").toString()
+                            reg = texto
                             texto =
                                 limitarDecimales(formatoResultado(result).toDouble(), 2).toString()
                         }
 
 
+                    } else if (input.contains("-")) {
+
+                        val cleanedInput = input.removePrefix("-")
+                        val parts = cleanedInput.split("-")
+                        val menosPrimero = input.startsWith("-")
+
+
+                        if (menosPrimero) {
+                            val operand1 = parts[0].toDouble()
+                            val operand2 = parts[1].toDouble()
+                            val result = -1 * (operand1 + operand2)
+                            reg = texto
+                            texto =
+                                limitarDecimales(formatoResultado(result).toDouble(), 2).toString()
+                        } else if (parts.size == 2) {
+                            val operand1 = parts[0].toDouble()
+                            val operand2 = parts[1].toDouble()
+                            val result = operand1 - operand2
+                            reg = texto
+                            texto =
+                                limitarDecimales(formatoResultado(result).toDouble(), 2).toString()
+
+                        }
+
+
                     } else {
+
+
                         if (regi.contains("+")) {
                             val parts = regi.split("+")
                             if (parts.size == 2) {
-                                val operand2 = parts[1].toDouble()
-                                var operan1 = input.toString().toDouble()
-                                val result = operan1 + (+ operand2)
+                                val op1 = input.toString().toDouble()
+                                val op2 = parts[1].toDouble()
+                                val result = op1 + op2
+                                reg =
+                                    formatoResultado(op1) + ("+").toString() + formatoResultado(op2)
                                 texto =
                                     limitarDecimales(
                                         formatoResultado(result).toDouble(),
@@ -325,38 +341,58 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         } else if (regi.contains("-")) {
                             val parts = regi.split("-")
                             if (parts.size == 2) {
-                                val operand2 = parts[1].toDouble()
-                                var operan1 = input.toString().toDouble()
-                                val result =  operan1 -  (operand2)
+                                val op1 = input.toString().toDouble()
+                                val op2 = parts[1].toDouble()
+                                val result = op1 - (op2)
+                                reg =
+                                    formatoResultado(op1) + ("-").toString() + formatoResultado(op2)
                                 texto =
                                     limitarDecimales(
                                         formatoResultado(result).toDouble(),
                                         2
                                     ).toString()
                             }
-                        }else if(regi.contains("/")) {
+                        } else if (regi.contains("/")) {
                             val parts = regi.split("/")
                             if (parts.size == 2) {
-                                val operand2 = parts[1].toDouble()
-                                var operan1 = input.toString().toDouble()
-                                val result = operan1 / (+ operand2)
+                                val op1 = input.toString().toDouble()
+                                val op2 = parts[1].toDouble()
+                                val result = op1 / (op2)
+                                reg =
+                                    formatoResultado(op1) + ("/").toString() + formatoResultado(op2)
                                 texto =
                                     limitarDecimales(
                                         formatoResultado(result).toDouble(),
                                         2
                                     ).toString()
                             }
-                        }else if(regi.contains("x")) {
+                        } else if (regi.contains("x")) {
                             val parts = regi.split("x")
                             if (parts.size == 2) {
-                                val operand2 = parts[1].toDouble()
-                                var operan1 = input.toString().toDouble()
-                                val result = +(operan1) + (+operand2)
+                                val op1 = input.toString().toDouble()
+                                val op2 = parts[1].toDouble()
+                                val result = op1 * op2
+                                reg =
+                                    formatoResultado(op1) + ("x").toString() + formatoResultado(op2)
                                 texto =
                                     limitarDecimales(
                                         formatoResultado(result).toDouble(),
                                         2
                                     ).toString()
+                            }
+                        } else if (regi.contains("^")) {
+                            val parts = regi.split("^")
+                            if (parts.size == 2) {
+                                val op1 = input.toString().toDouble()
+                                val op2 = parts[1].toDouble()
+                                val result = Math.pow(op1, op2)
+                                reg =
+                                    formatoResultado(op1) + ("^").toString() + formatoResultado(op2)
+                                texto =
+                                    limitarDecimales(
+                                        formatoResultado(result).toDouble(),
+                                        2
+                                    )
                             }
                         }
                     }
@@ -396,7 +432,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         return formato.format(numero)
     }
 
-  
+
 }
 
 
